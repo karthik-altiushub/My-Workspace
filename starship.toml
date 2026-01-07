@@ -1,0 +1,100 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Top-level prompt format. This defines the order of all modules.
+# I've moved $kubernetes to appear after $directory to address your main issue.
+format = """\
+$awsusername\
+$hostname\
+$singularity\
+$directory\
+$kubernetes\
+$git_branch\
+$hg_branch\
+$hg_status\
+$php\
+$python\
+$rust\
+$golang\
+$java\
+$elm\
+$elixir\
+$nim\
+$swift\
+$deno\
+$kotlin\
+$scala\
+$haskell\
+$lua\
+$zig\
+$crystal\
+$julia\
+$aws\
+$cmake\
+$shell\
+$cmd_duration\
+$line_break\
+$character\
+"""
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character] # The name of the module we are configuring is 'character'
+# success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+
+
+# --- MODULE CUSTOMIZATION (Where you add colors/symbols) ---
+
+# Kubernetes Module Configuration (Fix for context detection and adding the space)
+[kubernetes]
+disabled = false
+# FIX: Removed the obsolete 'detect_context' key.
+style = "bold cyan"
+symbol = '🐳'
+# FIX: Format includes a space between the symbol and context name.
+format = 'on k8s [$symbol $context]($style) '
+
+
+[directory]
+# Set the style to bold cyan to match your desired color
+style = "bold cyan"
+truncate_to_repo = true
+# FIX: The format now includes the "📂 " emoji directly.
+# We remove the old format which used the invalid $symbol variable.
+format = "📂 [$path]($style)[$read_only]($read_only_style) "
+
+
+[git_branch]
+style = "#FF00FF"
+# Use a common, widely supported emoji/symbol that represents a branch
+# symbol = '🌱 ' 
+#symbol = '🌿 '
+# symbol = '🪵 '
+# symbol = '🍂 '
+symbol = '🌴 '
+
+# Define the format to include "on" and the symbol
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+style = "bold red"
+# Custom symbols for better clarity:
+stashed = "📦"
+modified = "✏️"
+ahead = "⬆️"
+behind = "⬇️"
+diverged = "⇕"
+untracked = "?"
+# Ensure the "format" line here only defines how the module itself is rendered,
+# not the entire prompt layout. If this line causes an issue, you can remove it
+# and rely on the default format, as $all_status is the key variable here.
+format = '[$all_status]($style)'
+
+[aws]
+format = 'on [$symbol($profile )(\($region\) )]($style)'
+style = 'bold orange'
+symbol = '☁️ '
+[aws.region_aliases]
+us-east-1 = 'use1'
+ap-south-1 = 'aps1'
+[aws.profile_aliases]
+PowerUserAccess = 'PowerUser'
