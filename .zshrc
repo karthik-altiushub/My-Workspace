@@ -39,9 +39,6 @@ add-zsh-hook precmd load-nvm
 
 # Brew & Nix
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-if [ -e /home/karthiknarayan/.nix-profile/etc/profile.d/nix.sh ]; then
-  . /home/karthiknarayan/.nix-profile/etc/profile.d/nix.sh
-fi
 
 # Alias
 alias k="kubectl"
@@ -49,6 +46,7 @@ alias t="terraform"
 alias venv="source .venv/bin/activate"
 alias rs="python manage.py runserver"
 alias rt="python manage.py shell"
+alias nano="zed"
 
 export KUBECTL_DISABLE_HTTP2=true
 
@@ -91,4 +89,10 @@ alogin() {
   echo "✅ SSO login successful."
   echo "🧾 Running: aws sts get-caller-identity"
   aws sts get-caller-identity --profile "${profile}"
+}
+
+# Helper for switching namespace quickly
+ks() {
+  [ $# -gt 1 ] && echo "Usage: ks [namespace]" && return 1
+  kubectl config set-context --current --namespace="${1:-default}"
 }

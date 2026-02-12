@@ -51,7 +51,8 @@ disabled = false
 style = "bold cyan"
 symbol = '🐳'
 # FIX: Format includes a space between the symbol and context name.
-format = 'on k8s [$symbol $context]($style) '
+#format = 'on k8s [$symbol $context]($style) '
+format = 'on k8s [$symbol [$context](cyan)::[$namespace](bright-yellow)]($style) '
 
 
 [directory]
@@ -66,7 +67,7 @@ format = "📂 [$path]($style)[$read_only]($read_only_style) "
 [git_branch]
 style = "#FF00FF"
 # Use a common, widely supported emoji/symbol that represents a branch
-# symbol = '🌱 ' 
+# symbol = '🌱 '
 #symbol = '🌿 '
 # symbol = '🪵 '
 # symbol = '🍂 '
