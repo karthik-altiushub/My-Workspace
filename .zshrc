@@ -37,8 +37,14 @@ load-nvm() {
 
 add-zsh-hook precmd load-nvm
 
-# Brew & Nix
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# Brew
+if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+  # Brew is installed, load it
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif ! command -v brew &> /dev/null; then
+  # Brew not found, install in background without blocking
+  (/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" >/dev/null 2>&1 &)
+fi
 
 # Alias
 alias k="kubectl"
