@@ -21,7 +21,9 @@ SAVEHIST=5000
 # User configuration
 
 # Starship
-eval "$(starship init zsh)"
+if ! command -v starship &> /dev/null; then
+  echo "⚠️  Starship not found. Please install starship."
+fi
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
@@ -38,12 +40,8 @@ load-nvm() {
 add-zsh-hook precmd load-nvm
 
 # Brew
-if [ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-  # Brew is installed, load it
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-elif ! command -v brew &> /dev/null; then
-  # Brew not found, install in background without blocking
-  (/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" >/dev/null 2>&1 &)
+if ! command -v brew &> /dev/null; then
+  echo "⚠️  Homebrew not found. Please install homebrew."
 fi
 
 # Alias
