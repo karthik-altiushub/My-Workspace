@@ -46,6 +46,7 @@ alias t="terraform"
 alias venv="source .venv/bin/activate"
 alias rs="python manage.py runserver"
 alias rt="python manage.py shell"
+# alias nano="zed"
 
 export KUBECTL_DISABLE_HTTP2=true
 
@@ -54,6 +55,9 @@ export PATH=$PATH:/home/karthiknarayan/.kubescape/bin
 
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 export PATH=$JAVA_HOME/bin:$PATH
+
+# Run Unison in background quietly
+# (unison credentials >/dev/null 2>&1 &)
 
 export PAGER=""
 export KUBECTL_DISABLE_HTTP2=true
@@ -99,3 +103,7 @@ ks() {
 
 export CLAUDE_CODE_USE_BEDROCK=1
 export DISABLE_PROMPT_CACHING=1
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then eval $(dbus-launch --sh-syntax); fi
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"
